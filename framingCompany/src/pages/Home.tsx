@@ -3,7 +3,7 @@
 * @format
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -13,12 +13,17 @@ import {
   Image,
 } from 'react-native';
 
+import Button from '../components/Button';
+import WelcomeName from '../components/WelcomeName';
+import InputName from '../components/InputName';
 import Colors from '../utils/Colors';
-import Button from '../components/Button'
-
 const logo = '../images/logo.png'
+const profile = '../images/profile.png'
 
 const App = () => {
+  const [editingMode, setEditingMode] = useState(false);
+  const [userName, setUserName] = useState('');
+
   return (
     <SafeAreaView style={styles.containerApp}>
       <StatusBar barStyle={'light-content'} />
@@ -27,11 +32,21 @@ const App = () => {
           <Image source={require(logo)} style={styles.logo} resizeMode='contain' />
         </View>
       </View>
-      <View style={styles.profile}>
-
+      <View style={styles.profileContainer}>
+        <View style={styles.welcomeName}>
+          {editingMode ? <InputName /> : <WelcomeName title={`Hello${userName}!`}/>}
+        </View>
+        <View style={styles.userPictureContainer}>
+          <View style={styles.userPictureWrap}>
+            <Image source={require(profile)} style={styles.userPicture} resizeMode='contain' />
+          </View>
+        </View>
       </View>
       <View style={styles.button}>
-        <Button title="Edit Profile" onPress={() => {}}/>
+        <Button 
+          title={editingMode ? "Publish" : "Edit Profile"} 
+          onPress={() => setEditingMode(!editingMode)}
+        />
       </View>
     </SafeAreaView>
   );
@@ -54,13 +69,36 @@ const styles = StyleSheet.create({
    justifyContent: 'center',
    alignItems: 'center',
    borderWidth: 5,
-   borderColor: Colors.seafoamBlue
+   borderColor: Colors.seafoamBlue,
  },
  logo: {
    flex: 1,
  },
- profile: {
+ profileContainer: {
   flex: 5,
+  flexDirection: 'column',
+ },
+ welcomeName: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+ },
+ userPictureContainer: {
+  flex: 4,
+  alignItems: 'center',
+ },
+ userPictureWrap: {
+  width: 250,
+  height: 250,
+  borderRadius: 250 / 2,
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderWidth: 5,
+  borderColor: Colors.seafoamBlue,
+ },
+ userPicture: {
+   height: '100%',
+   width: '100%'
  },
  button: {
   flex: 1,
