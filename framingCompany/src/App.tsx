@@ -10,6 +10,8 @@
    View,
  } from 'react-native';
 
+ import Colors from './utils/Colors';
+
  const App = () => {
    return (
      <SafeAreaView style={styles.containerApp}>
@@ -20,7 +22,7 @@
  const styles = StyleSheet.create({
   containerApp: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: Colors.indigoBlue,
   }
  });
 
