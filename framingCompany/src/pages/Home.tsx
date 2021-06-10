@@ -10,6 +10,8 @@ import {
   View,
   StatusBar,
   Image,
+  Text,
+  TouchableOpacity,
 } from 'react-native';
 
 import Button from '../components/Button';
@@ -47,6 +49,11 @@ const App = () => {
           <View style={styles.userPictureWrap}>
             <Image source={require(profile)} style={styles.userPicture} resizeMode='contain' />
           </View>
+          {editingMode && 
+            <TouchableOpacity onPress={() => console.log('clicked')}>
+              <Text style={styles.newPictureText}>Chose a different picture</Text>
+            </TouchableOpacity> 
+          }
         </View>
       </View>
       <View style={styles.button}>
@@ -93,6 +100,7 @@ const styles = StyleSheet.create({
  userPictureContainer: {
   flex: 4,
   alignItems: 'center',
+  backgroundColor: 'green'
  },
  userPictureWrap: {
   width: 250,
@@ -106,6 +114,13 @@ const styles = StyleSheet.create({
  userPicture: {
    height: '100%',
    width: '100%'
+ },
+ newPictureText: {
+   color: Colors.seafoamBlue,
+   fontSize: 14,
+   fontWeight: 'bold',
+   fontFamily: 'Helvetica',
+   marginTop: 20,
  },
  button: {
   flex: 1,
