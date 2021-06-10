@@ -7,7 +7,6 @@ import React, { useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  Text,
   View,
   StatusBar,
   Image,
@@ -34,7 +33,15 @@ const App = () => {
       </View>
       <View style={styles.profileContainer}>
         <View style={styles.welcomeName}>
-          {editingMode ? <InputName /> : <WelcomeName title={`Hello${userName}!`}/>}
+          {editingMode ? 
+            <InputName 
+              userName={userName} 
+              editingMode={editingMode}
+              setUserName={setUserName} 
+            /> 
+            : 
+            <WelcomeName title={`Hello${userName === '' ? '' : ' '}${userName}!`}/>
+          }
         </View>
         <View style={styles.userPictureContainer}>
           <View style={styles.userPictureWrap}>
@@ -43,7 +50,7 @@ const App = () => {
         </View>
       </View>
       <View style={styles.button}>
-        <Button 
+        <Button
           title={editingMode ? "Publish" : "Edit Profile"} 
           onPress={() => setEditingMode(!editingMode)}
         />
