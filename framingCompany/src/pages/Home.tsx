@@ -13,18 +13,21 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import ImagePicker from 'react-native-image-crop-picker';
 
 import Button from '../components/Button';
 import WelcomeName from '../components/WelcomeName';
 import InputName from '../components/InputName';
 import Colors from '../utils/Colors';
+import ImagePlaceholder from '../utils/ImagePlaceholder';
 const logo = '../images/logo.png'
-const profile = '../images/profile.png'
+const profilePath = '../images/profile.png'
 
 const App = () => {
+  const [profilePic, setProfilePic] = useState(ImagePlaceholder.profilePic64);
   const [editingMode, setEditingMode] = useState(false);
   const [userName, setUserName] = useState('');
-
+  
   return (
     <SafeAreaView style={styles.containerApp}>
       <StatusBar barStyle={'light-content'} />
@@ -47,10 +50,20 @@ const App = () => {
         </View>
         <View style={styles.userPictureContainer}>
           <View style={styles.userPictureWrap}>
-            <Image source={require(profile)} style={styles.userPicture} resizeMode='contain' />
+            <Image source={{uri: `data:image/jpeg;base64,${profilePic}`}} style={styles.userPicture} resizeMode='cover' />
           </View>
           {editingMode && 
-            <TouchableOpacity onPress={() => console.log('clicked')}>
+            <TouchableOpacity onPress={() => {
+                ImagePicker.openPicker({
+                  width: 300,
+                  height: 400,
+                  cropping: true,
+                  includeBase64: true,
+                }).then(image => {
+                  setProfilePic(image.data)
+                });
+              }
+            }>
               <Text style={styles.newPictureText}>Chose a different picture</Text>
             </TouchableOpacity> 
           }
@@ -100,7 +113,6 @@ const styles = StyleSheet.create({
  userPictureContainer: {
   flex: 4,
   alignItems: 'center',
-  backgroundColor: 'green'
  },
  userPictureWrap: {
   width: 250,
@@ -112,8 +124,9 @@ const styles = StyleSheet.create({
   borderColor: Colors.seafoamBlue,
  },
  userPicture: {
-   height: '100%',
-   width: '100%'
+  width: 240,
+  height: 240,
+  borderRadius: 250 / 2,
  },
  newPictureText: {
    color: Colors.seafoamBlue,
