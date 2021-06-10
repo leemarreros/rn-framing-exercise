@@ -9,16 +9,23 @@ import {
   StyleSheet,
   Text,
   View,
+  StatusBar,
+  Image,
 } from 'react-native';
 
 import Colors from '../utils/Colors';
 import Button from '../components/Button'
 
+const logo = '../images/logo.png'
+
 const App = () => {
   return (
     <SafeAreaView style={styles.containerApp}>
+      <StatusBar barStyle={'light-content'} />
       <View style={styles.header}>
-
+        <View style={styles.logoContainer}>
+          <Image source={require(logo)} style={styles.logo} resizeMode='contain' />
+        </View>
       </View>
       <View style={styles.profile}>
 
@@ -37,16 +44,26 @@ const styles = StyleSheet.create({
    flexDirection: 'column',
  },
  header: {
-  flex: 1.75,
-  backgroundColor: 'green',
+  flex: 2,
+  justifyContent: 'center',
+  alignItems: 'center',
+ },
+ logoContainer: {
+   height: 145,
+   width: 145,
+   justifyContent: 'center',
+   alignItems: 'center',
+   borderWidth: 5,
+   borderColor: Colors.seafoamBlue
+ },
+ logo: {
+   flex: 1,
  },
  profile: {
   flex: 5,
-  backgroundColor: 'blue',
  },
  button: {
   flex: 1,
-  backgroundColor: 'red',
   justifyContent: 'center',
   alignItems: 'center'
  },
