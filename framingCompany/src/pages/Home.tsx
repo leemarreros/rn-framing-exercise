@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.melon,
     borderWidth: 5,
     borderColor: Colors.seafoamBlue,
-    opacity: 0.75,
+    opacity: 0.6,
   },
   squareButton: {},
   roundedButton: {
@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+    opacity: 0.65,
   },
   changeIcon: {
     width: 35,
