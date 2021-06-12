@@ -5,43 +5,41 @@ import {getImageWithFrame} from '../services/frames';
 import Colors from '../utils/Colors';
 
 interface Props {
-  pictureBase64: string;
+  pictureUpdated: string;
   isRoundedProfile: boolean;
-  selectAFrame: (frameNumber: number) => void;
   frameNumber: number;
   frameName: string;
+  updateMainPicture: Function;
 }
 
 const FramePreview: React.FC<Props> = ({
-  pictureBase64,
+  pictureUpdated,
   isRoundedProfile,
-  selectAFrame,
   frameNumber,
   frameName,
+  updateMainPicture,
 }) => {
-  const [picturePerFrame, setPicturePerFrame] = useState(pictureBase64);
+  const [picturePerFrame, setPicturePerFrame] = useState(pictureUpdated);
 
   useEffect(() => {
     const shape = isRoundedProfile ? 'Round' : 'Square';
     if (frameNumber !== 0) {
-      getImageWithFrame(pictureBase64, shape, frameNumber)
+      getImageWithFrame(pictureUpdated, shape, frameNumber)
         .then(data => {
           if (data !== undefined) {
             const {response} = data;
-            console.log('response no r', response.substring(0, 10))
-            console.log('response r', response.replace('data:image/jpeg;base64,', '').substring(0, 20))
             setPicturePerFrame(response.replace('data:image/png;base64,', ''));
           }
         })
         .catch(error => console.log('Error in Getting Frame', error));
     }
-    setPicturePerFrame(pictureBase64);
+    setPicturePerFrame(pictureUpdated);
     return () => {};
-  }, [pictureBase64, isRoundedProfile]);
+  }, [pictureUpdated, isRoundedProfile]);
 
   return (
     <TouchableOpacity
-      onPress={() => selectAFrame(frameNumber)}
+      onPress={() => updateMainPicture(picturePerFrame)}
       style={styles.frame}>
       <Text style={styles.frameName}>{frameName}</Text>
       <Image

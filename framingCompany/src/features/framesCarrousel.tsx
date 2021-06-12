@@ -16,13 +16,15 @@ const framesList = [
 interface PropsCarrousel {
   editingMode: boolean;
   isRoundedProfile: boolean;
-  pictureBase64: string;
+  pictureUpdated: string;
+  updateMainPicture: Function;
 }
 
 const FramesCarrousel: React.FC<PropsCarrousel> = ({
   editingMode,
   isRoundedProfile,
-  pictureBase64,
+  pictureUpdated,
+  updateMainPicture,
 }) => {
   return editingMode ? (
     <ScrollView
@@ -37,8 +39,8 @@ const FramesCarrousel: React.FC<PropsCarrousel> = ({
             frameName={frameName}
             key={index.toString()}
             isRoundedProfile={isRoundedProfile}
-            pictureBase64={pictureBase64}
-            selectAFrame={frameNumber => console.log(frameNumber)}
+            pictureUpdated={pictureUpdated}
+            updateMainPicture={updateMainPicture}
             frameNumber={frameNumber}
           />
         );

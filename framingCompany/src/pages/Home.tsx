@@ -3,7 +3,7 @@
  * @format
  */
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -21,18 +21,21 @@ import InputName from '../components/InputName';
 import FramesCarrousel from '../features/framesCarrousel';
 import Colors from '../utils/Colors';
 import ImagePlaceholder from '../utils/ImagePlaceholder';
-import {getImageWithFrame} from '../services/frames';
-import {shapes} from '../services/frames'
 
 const logo = '../images/logo.png';
 const changeIcon = '../images/change.png';
 const profilePicSize = 220;
 
 const App = () => {
-  const [profilePic, setProfilePic] = useState(ImagePlaceholder.profilePic64);
+  const [pictureUpdated, updatePicture] = useState(ImagePlaceholder.profilePic64);
+  const [mainPicture, updateMainPicture] = useState(ImagePlaceholder.profilePic64);
   const [editingMode, setEditingMode] = useState(false);
   const [userName, setUserName] = useState('');
   const [isRoundedProfile, setShapeProfile] = useState(true);
+
+  useEffect(() => {
+    updateMainPicture(pictureUpdated)
+  }, [pictureUpdated]);
 
   return (
     <SafeAreaView style={styles.containerApp}>
@@ -82,7 +85,7 @@ const App = () => {
                 isRoundedProfile ? styles.userPictureWrapRounded : null,
               ]}>
               <Image
-                source={{uri: `data:image/jpeg;base64,${profilePic}`}}
+                source={{uri: `data:image/jpeg;base64,${mainPicture}`}}
                 style={[
                   styles.userPicture,
                   isRoundedProfile ? styles.userPictureRounded : null,
@@ -101,10 +104,7 @@ const App = () => {
                       includeBase64: true,
                     })
                       .then(image => {
-                        console.log(image.width);
-                        console.log(image.height);
-                        console.log(image.data.substring(0, 50));
-                        setProfilePic(image.data);
+                        updatePicture(image.data);
                       })
                       .catch(error => console.log(error));
                   }}
@@ -120,9 +120,10 @@ const App = () => {
         </View>
         <View style={styles.carrousel}>
           <FramesCarrousel
+            updateMainPicture={updateMainPicture}
             editingMode={editingMode}
             isRoundedProfile={isRoundedProfile}
-            pictureBase64={profilePic}
+            pictureUpdated={pictureUpdated}
           />
         </View>
       </View>
