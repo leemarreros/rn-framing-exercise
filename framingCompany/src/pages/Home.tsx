@@ -21,6 +21,7 @@ import InputName from '../components/InputName';
 import FramesCarrousel from '../features/framesCarrousel';
 import Colors from '../utils/Colors';
 import ImagePlaceholder from '../utils/ImagePlaceholder';
+import { getImageWithFrame } from '../services/frames';
 const logo = '../images/logo.png';
 const changeIcon = '../images/change.png';
 const profilePicSize = 220;
