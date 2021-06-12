@@ -1,6 +1,7 @@
-const getFrameUrl = 'http://localhost:5000/getSquareframes';
+const rootUrl = 'http://localhost:5000';
 
-export function getImageWithFrame(imageBase64: string): Promise<any> {
+export function getImageWithFrame(imageBase64: string, type: string, frameNumber: number): Promise<any> {
+  const getFrameUrl = `${rootUrl}/getImageWithFrame?type=${type}&frameNumber=${frameNumber}`;
   return fetch(getFrameUrl, {
     method: 'POST',
     headers: {

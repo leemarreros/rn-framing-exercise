@@ -20,7 +20,6 @@ const frameImagesRound = [
 
 const jimpsSquare = [];
 const jimpsRound = [];
-const profile = [];
 
 frameImagesSquare.forEach(function (path) {
   jimpsSquare.push(jimp.read(path));
@@ -32,27 +31,24 @@ frameImagesRound.forEach(function (path) {
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
-app.post("/getSquareframes", (req, res) => {
-  profile.push(jimp.read(Buffer.from(req.body.base, "base64")));
-  Promise.all([...profile, ...jimpsSquare])
+app.post("/getImageWithFrame", (req, res) => {
+  const jimps = [];
+  const type = req.query.type;
+  const frameNumber = req.query.frameNumber;
+
+  if (type === "Round") {
+    jimps.push(jimpsRound[frameNumber - 1]);
+  } else {
+    jimps.push(jimpsSquare[frameNumber - 1]);
+  }
+  jimps.push(jimp.read(Buffer.from(req.body.base, "base64")));
+  Promise.all([...jimps])
     .then(function (data) {
-      const imageBase1 = data[0].clone();
-      const imageBase2 = data[0].clone();
-      const imageBase3 = data[0].clone();
-
-      imageBase1.composite(data[1], 0, 0);
-      imageBase2.composite(data[2], 0, 0);
-      imageBase3.composite(data[3], 0, 0);
-
-      Promise.all([
-        imageBase1.getBase64Async(jimp.MIME_PNG),
-        imageBase2.getBase64Async(jimp.MIME_PNG),
-        imageBase3.getBase64Async(jimp.MIME_PNG),
-      ])
+      data[1].composite(data[0], 0, 0);
+      data[1]
+        .getBase64Async(jimp.MIME_PNG)
         .then(function (result) {
-          console.log("0", result[0].substring(0, 20));
-          console.log("1", result[1].substring(0, 20));
-          console.log("2", result[2].substring(0, 20));
+          res.send({ response: result });
         })
         .catch(function (error) {
           console.log("Error converting to base64", error);
@@ -61,7 +57,6 @@ app.post("/getSquareframes", (req, res) => {
     .catch(function (error) {
       console.log("Error reading paths", error);
     });
-  res.send({ response: "Mergin frame into sent picture" });
 });
 
 app.get("/geRoundframes", (req, res) => {

@@ -21,7 +21,9 @@ import InputName from '../components/InputName';
 import FramesCarrousel from '../features/framesCarrousel';
 import Colors from '../utils/Colors';
 import ImagePlaceholder from '../utils/ImagePlaceholder';
-import { getImageWithFrame } from '../services/frames';
+import {getImageWithFrame} from '../services/frames';
+import {shapes} from '../services/frames'
+
 const logo = '../images/logo.png';
 const changeIcon = '../images/change.png';
 const profilePicSize = 220;
@@ -97,13 +99,14 @@ const App = () => {
                       height: 300,
                       cropping: true,
                       includeBase64: true,
-                    }).then(image => {
-                      console.log(image.width)
-                      console.log(image.height)
-                      console.log(image.data.substring(0,50))
-                      setProfilePic(image.data);
                     })
-                    .catch(error => console.log(error))
+                      .then(image => {
+                        console.log(image.width);
+                        console.log(image.height);
+                        console.log(image.data.substring(0, 50));
+                        setProfilePic(image.data);
+                      })
+                      .catch(error => console.log(error));
                   }}
                   activeOpacity={0.75}>
                   <Image
@@ -116,7 +119,11 @@ const App = () => {
           </View>
         </View>
         <View style={styles.carrousel}>
-          <FramesCarrousel editingMode={editingMode} isRoundedProfile={isRoundedProfile} pictureBase64={profilePic}/>
+          <FramesCarrousel
+            editingMode={editingMode}
+            isRoundedProfile={isRoundedProfile}
+            pictureBase64={profilePic}
+          />
         </View>
       </View>
       <View style={styles.button}>
@@ -162,7 +169,7 @@ const styles = StyleSheet.create({
   },
   userPictureContainer: {
     flex: 4,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   top: {
     flexDirection: 'row',
@@ -218,7 +225,7 @@ const styles = StyleSheet.create({
   carrousel: {
     width: '100%',
     flex: 1.5,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   button: {
     flex: 1,
