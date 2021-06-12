@@ -21,10 +21,11 @@ const InputName: React.FC<Props> = ({userName, editingMode, setUserName}) => {
   return (
     <View style={styles.inputWrapper}>
       <TextInput
+        placeholderTextColor={Colors.seafoamBlue}
         style={styles.input}
         onChangeText={onChangeText}
         value={text}
-        placeholder="your name"
+        placeholder={"your name"}
         maxLength={20}
       />
     </View>
@@ -40,8 +41,9 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.seafoamBlue
   },
   input: {
-    fontSize: 23,
-    color: Colors.seafoamBlue
+    fontSize: 22,
+    color: Colors.seafoamBlue,
+    fontFamily: 'Helvetica'
   },
 });
 

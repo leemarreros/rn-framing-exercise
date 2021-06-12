@@ -18,10 +18,10 @@ import ImagePicker from 'react-native-image-crop-picker';
 import Button from '../components/Button';
 import WelcomeName from '../components/WelcomeName';
 import InputName from '../components/InputName';
+import FramesCarrousel from '../features/framesCarrousel';
 import Colors from '../utils/Colors';
 import ImagePlaceholder from '../utils/ImagePlaceholder';
 const logo = '../images/logo.png';
-const profilePath = '../images/profile.png';
 const changeIcon = '../images/change.png';
 const profilePicSize = 220;
 
@@ -93,12 +93,16 @@ const App = () => {
                   onPress={() => {
                     ImagePicker.openPicker({
                       width: 300,
-                      height: 400,
+                      height: 300,
                       cropping: true,
                       includeBase64: true,
                     }).then(image => {
+                      console.log(image.width)
+                      console.log(image.height)
+                      console.log(image.data.substring(0,50))
                       setProfilePic(image.data);
-                    });
+                    })
+                    .catch(error => console.log(error))
                   }}
                   activeOpacity={0.75}>
                   <Image
@@ -109,6 +113,9 @@ const App = () => {
               )}
             </View>
           </View>
+        </View>
+        <View style={styles.carrousel}>
+          <FramesCarrousel editingMode={editingMode} isRoundedProfile={isRoundedProfile} pictureBase64={profilePic}/>
         </View>
       </View>
       <View style={styles.button}>
@@ -154,7 +161,7 @@ const styles = StyleSheet.create({
   },
   userPictureContainer: {
     flex: 4,
-    alignItems: 'center',
+    justifyContent: 'center'
   },
   top: {
     flexDirection: 'row',
@@ -207,12 +214,10 @@ const styles = StyleSheet.create({
   userPictureRounded: {
     borderRadius: profilePicSize - 10 / 2,
   },
-  newPictureText: {
-    color: Colors.seafoamBlue,
-    fontSize: 14,
-    fontWeight: 'bold',
-    fontFamily: 'Helvetica',
-    marginTop: 20,
+  carrousel: {
+    width: '100%',
+    flex: 1.5,
+    alignItems: 'center'
   },
   button: {
     flex: 1,
