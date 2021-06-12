@@ -1,47 +1,52 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const jimp = require("jimp");
+import express from "express";
+import bodyParser from "body-parser";
+import jimp from "jimp";
+
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const port = process.env.PORT || 5000;
-const profileTest = require("./images/frames/image").profilePic64;
-const frameImagesSquare = [
+
+const frameImagesSquare:string[] = [
   "./images/frames/sanFranciscoSquare.png",
   "./images/frames/flowerSquare.png",
   "./images/frames/orangeSquare.png",
 ];
-const frameImagesRound = [
+const frameImagesRound:string[] = [
   "./images/frames/sanFranciscoRound.png",
   "./images/frames/flowerRound.png",
   "./images/frames/orangeRound.png",
 ];
 
-const jimpsSquare = [];
-const jimpsRound = [];
+const jimpsSquare: jimp[] = [];
+const jimpsRound: jimp[] = [];
 
 frameImagesSquare.forEach(function (path) {
+  // @ts-ignore
   jimpsSquare.push(jimp.read(path));
 });
 
 frameImagesRound.forEach(function (path) {
+  // @ts-ignore
   jimpsRound.push(jimp.read(path));
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
-app.post("/getImageWithFrame", (req, res) => {
-  const jimps = [];
+app.post("/getImageWithFrame", async (req, res) => {
+  const jimps: jimp[] = [];
   const type = req.query.type;
   const frameNumber = req.query.frameNumber;
 
   if (type === "Round") {
-    jimps.push(jimpsRound[frameNumber - 1]);
+    console.log('Round', Number(frameNumber))
+    jimps.push(jimpsRound[Number(frameNumber) - 1]);
   } else {
-    jimps.push(jimpsSquare[frameNumber - 1]);
+    console.log('Square', Number(frameNumber))
+    jimps.push(jimpsSquare[Number(frameNumber) - 1]);
   }
-  jimps.push(jimp.read(Buffer.from(req.body.base, "base64")));
+  jimps.push(await jimp.read(Buffer.from(req.body.base, "base64")));
   Promise.all([...jimps])
     .then(function (data) {
       data[1].composite(data[0], 0, 0);
@@ -57,8 +62,4 @@ app.post("/getImageWithFrame", (req, res) => {
     .catch(function (error) {
       console.log("Error reading paths", error);
     });
-});
-
-app.get("/geRoundframes", (req, res) => {
-  res.send({ response: "Mergin frame into sent picture" });
 });
