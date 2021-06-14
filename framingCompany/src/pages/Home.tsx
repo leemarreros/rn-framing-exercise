@@ -11,6 +11,9 @@ import {
   StatusBar,
   Image,
   TouchableOpacity,
+  ScrollView,
+  Platform,
+  Dimensions,
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 
@@ -21,117 +24,124 @@ import FramesCarrousel from '../features/framesCarrousel';
 import Colors from '../utils/Colors';
 import ImagePlaceholder from '../utils/ImagePlaceholder';
 
+const height = Dimensions.get("window").height;
 const logo = '../images/logo.png';
 const changeIcon = '../images/change.png';
 const profilePicSize = 220;
 
 const App = () => {
-  const [pictureUpdated, updatePicture] = useState(ImagePlaceholder.profilePic64);
-  const [mainPicture, updateMainPicture] = useState(ImagePlaceholder.profilePic64);
+  const [pictureUpdated, updatePicture] = useState(
+    ImagePlaceholder.profilePic64,
+  );
+  const [mainPicture, updateMainPicture] = useState(
+    ImagePlaceholder.profilePic64,
+  );
   const [editingMode, setEditingMode] = useState(false);
   const [userName, setUserName] = useState('');
   const [isRoundedProfile, setShapeProfile] = useState(true);
 
   useEffect(() => {
-    updateMainPicture(pictureUpdated)
+    updateMainPicture(pictureUpdated);
   }, [pictureUpdated]);
 
   return (
     <SafeAreaView style={styles.containerApp}>
-      <StatusBar barStyle={'light-content'} />
-      <View style={styles.header}>
-        <View style={styles.logoContainer}>
-          <Image
-            source={require(logo)}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-        </View>
-      </View>
-      <View style={styles.profileContainer}>
-        <View style={styles.welcomeName}>
-          {editingMode ? (
-            <InputName
-              userName={userName}
-              editingMode={editingMode}
-              setUserName={setUserName}
+      <ScrollView contentContainerStyle={styles.scrollViewStyle}>
+        <StatusBar barStyle={'light-content'} />
+        <View style={styles.header}>
+          <View style={styles.logoContainer}>
+            <Image
+              source={require(logo)}
+              style={styles.logo}
+              resizeMode="contain"
             />
-          ) : (
-            <WelcomeName
-              title={`Hello${userName === '' ? '' : ' '}${userName}!`}
-            />
-          )}
-        </View>
-        <View style={styles.userPictureContainer}>
-          <View style={styles.top}>
-            <View style={styles.squareRoundButtons}>
-              {editingMode && (
-                <TouchableOpacity
-                  onPress={() => setShapeProfile(false)}
-                  style={[styles.buttonLeft, styles.squareButton]}
-                />
-              )}
-              {editingMode && (
-                <TouchableOpacity
-                  onPress={() => setShapeProfile(true)}
-                  style={[styles.buttonLeft, styles.roundedButton]}
-                />
-              )}
-            </View>
-            <View
-              style={[
-                styles.userPictureWrap,
-                isRoundedProfile ? styles.userPictureWrapRounded : null,
-              ]}>
-              <Image
-                source={{uri: `data:image/jpeg;base64,${mainPicture}`}}
-                style={[
-                  styles.userPicture,
-                  isRoundedProfile ? styles.userPictureRounded : null,
-                ]}
-                resizeMode="cover"
-              />
-            </View>
-            <View style={styles.changePictureButton}>
-              {editingMode && (
-                <TouchableOpacity
-                  onPress={() => {
-                    ImagePicker.openPicker({
-                      width: 300,
-                      height: 300,
-                      cropping: true,
-                      includeBase64: true,
-                    })
-                      .then(image => {
-                        updatePicture(image.data);
-                      })
-                      .catch(error => console.log(error));
-                  }}
-                  activeOpacity={0.75}>
-                  <Image
-                    style={styles.changeIcon}
-                    source={require(changeIcon)}
-                  />
-                </TouchableOpacity>
-              )}
-            </View>
           </View>
         </View>
-        <View style={styles.carrousel}>
-          <FramesCarrousel
-            updateMainPicture={updateMainPicture}
-            editingMode={editingMode}
-            isRoundedProfile={isRoundedProfile}
-            pictureUpdated={pictureUpdated}
+        <View style={styles.profileContainer}>
+          <View style={styles.welcomeName}>
+            {editingMode ? (
+              <InputName
+                userName={userName}
+                editingMode={editingMode}
+                setUserName={setUserName}
+              />
+            ) : (
+              <WelcomeName
+                title={`Hello${userName === '' ? '' : ' '}${userName}!`}
+              />
+            )}
+          </View>
+          <View style={styles.userPictureContainer}>
+            <View style={styles.top}>
+              <View style={styles.squareRoundButtons}>
+                {editingMode && (
+                  <TouchableOpacity
+                    onPress={() => setShapeProfile(false)}
+                    style={[styles.buttonLeft, styles.squareButton]}
+                  />
+                )}
+                {editingMode && (
+                  <TouchableOpacity
+                    onPress={() => setShapeProfile(true)}
+                    style={[styles.buttonLeft, styles.roundedButton]}
+                  />
+                )}
+              </View>
+              <View
+                style={[
+                  styles.userPictureWrap,
+                  isRoundedProfile ? styles.userPictureWrapRounded : null,
+                ]}>
+                <Image
+                  source={{uri: `data:image/jpeg;base64,${mainPicture}`}}
+                  style={[
+                    styles.userPicture,
+                    isRoundedProfile ? styles.userPictureRounded : null,
+                  ]}
+                  resizeMode="cover"
+                />
+              </View>
+              <View style={styles.changePictureButton}>
+                {editingMode && (
+                  <TouchableOpacity
+                    onPress={() => {
+                      ImagePicker.openPicker({
+                        width: 300,
+                        height: 300,
+                        cropping: true,
+                        includeBase64: true,
+                      })
+                        .then(image => {
+                          updatePicture(image.data);
+                        })
+                        .catch(error => console.log(error));
+                    }}
+                    activeOpacity={0.75}>
+                    <Image
+                      style={styles.changeIcon}
+                      source={require(changeIcon)}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
+          </View>
+          <View style={styles.carrousel}>
+            <FramesCarrousel
+              updateMainPicture={updateMainPicture}
+              editingMode={editingMode}
+              isRoundedProfile={isRoundedProfile}
+              pictureUpdated={pictureUpdated}
+            />
+          </View>
+        </View>
+        <View style={styles.button}>
+          <Button
+            title={editingMode ? 'Publish' : 'Edit Profile'}
+            onPress={() => setEditingMode(!editingMode)}
           />
         </View>
-      </View>
-      <View style={styles.button}>
-        <Button
-          title={editingMode ? 'Publish' : 'Edit Profile'}
-          onPress={() => setEditingMode(!editingMode)}
-        />
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -140,7 +150,10 @@ const styles = StyleSheet.create({
   containerApp: {
     flex: 1,
     backgroundColor: Colors.indigoBlue,
+  },
+  scrollViewStyle: {
     flexDirection: 'column',
+    ...Platform.OS === 'android' ? {height: height} : {flex: 1},
   },
   header: {
     flex: 2,

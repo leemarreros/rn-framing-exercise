@@ -35,10 +35,10 @@ const InputName: React.FC<Props> = ({userName, editingMode, setUserName}) => {
 const styles = StyleSheet.create({
   inputWrapper: {
     width: '50%',
-    height: 40,
+    height: 50,
     justifyContent: 'flex-end',
     borderBottomWidth: 4,
-    borderBottomColor: Colors.seafoamBlue
+    borderBottomColor: Colors.seafoamBlue,
   },
   input: {
     fontSize: 22,
