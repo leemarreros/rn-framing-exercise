@@ -10,7 +10,6 @@ import {
   View,
   StatusBar,
   Image,
-  Text,
   TouchableOpacity,
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
