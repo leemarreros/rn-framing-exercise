@@ -5,13 +5,7 @@ import {
 } from 'react-native';
 
 import FramePreview from '../components/FramePreview';
-
-const framesList = [
-  {frameNumber: 0, frameName: 'None'},
-  {frameNumber: 1, frameName: 'San Francisco'},
-  {frameNumber: 2, frameName: 'Flower'},
-  {frameNumber: 3, frameName: 'Square'},
-];
+import {arrayFrameNames, FrameNamesType} from '../../types/types';
 
 interface PropsCarrousel {
   editingMode: boolean;
@@ -32,8 +26,7 @@ const FramesCarrousel: React.FC<PropsCarrousel> = ({
       showsHorizontalScrollIndicator={false}
       style={styles.scroll}
       contentContainerStyle={styles.scrollStyle}>
-      {framesList.map((frame, index) => {
-        const {frameNumber, frameName} = frame;
+      {arrayFrameNames.map((frameName: FrameNamesType, index: number) => {
         return (
           <FramePreview
             frameName={frameName}
@@ -41,7 +34,7 @@ const FramesCarrousel: React.FC<PropsCarrousel> = ({
             isRoundedProfile={isRoundedProfile}
             pictureUpdated={pictureUpdated}
             updateMainPicture={updateMainPicture}
-            frameNumber={frameNumber}
+            frameNumber={index}
           />
         );
       })}

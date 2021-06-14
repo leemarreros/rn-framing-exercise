@@ -1,36 +1,31 @@
-import express from "express";
 import bodyParser from "body-parser";
+import express from "express";
 import jimp from "jimp";
+import { FrameNamesEnum, ShapeType, arrayFrameNames } from './types/types';
+
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const port = process.env.PORT || 5000;
-
-const frameImagesSquare:string[] = [
-  "./images/frames/sanFranciscoSquare.png",
-  "./images/frames/flowerSquare.png",
-  "./images/frames/orangeSquare.png",
-];
-const frameImagesRound:string[] = [
-  "./images/frames/sanFranciscoRound.png",
-  "./images/frames/flowerRound.png",
-  "./images/frames/orangeRound.png",
-];
+const shape: ShapeType[] = ['Round', "Square"]
 
 const jimpsSquare: jimp[] = [];
 const jimpsRound: jimp[] = [];
+const pathToImages = './images/frames/';
 
-frameImagesSquare.forEach(function (path) {
-  // @ts-ignore
-  jimpsSquare.push(jimp.read(path));
-});
-
-frameImagesRound.forEach(function (path) {
-  // @ts-ignore
-  jimpsRound.push(jimp.read(path));
-});
+shape.forEach((sh: ShapeType) => {
+  arrayFrameNames.forEach(frameName => {
+    if (sh === 'Round' && frameName !== 'None') {
+      // @ts-ignore
+      jimpsRound.push(jimp.read(`${pathToImages}${frameName}-${sh}.png`));
+    } else if (sh === 'Square' && frameName !== 'None') {
+      // @ts-ignore
+      jimpsSquare.push(jimp.read(`${pathToImages}${frameName}-${sh}.png`));
+    }
+  })
+})
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
@@ -40,10 +35,8 @@ app.post("/getImageWithFrame", async (req, res) => {
   const frameNumber = req.query.frameNumber;
 
   if (type === "Round") {
-    console.log('Round', Number(frameNumber))
     jimps.push(jimpsRound[Number(frameNumber) - 1]);
   } else {
-    console.log('Square', Number(frameNumber))
     jimps.push(jimpsSquare[Number(frameNumber) - 1]);
   }
   jimps.push(await jimp.read(Buffer.from(req.body.base, "base64")));
