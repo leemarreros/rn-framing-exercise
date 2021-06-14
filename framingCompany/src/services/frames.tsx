@@ -1,8 +1,10 @@
-const rootUrl = 'http://localhost:5000';
-const cache: {string: Object} | any = {};
+import { responseFrameI } from '../../types/types';
 import Hashing from '../utils/Hash';
 
-export function getImageWithFrame(imageBase64: string, type: string, frameNumber: number): Promise<any> {
+const rootUrl = 'http://localhost:5000';
+const cache: {string: responseFrameI} | any = {};
+
+export function getImageWithFrame(imageBase64: string, type: string, frameNumber: number): Promise<responseFrameI> {
   const request = `getImageWithFrame?type=${type}&frameNumber=${frameNumber}`;
 
   const hashKey = Hashing(`${request}${imageBase64}`);
@@ -25,5 +27,5 @@ export function getImageWithFrame(imageBase64: string, type: string, frameNumber
       cache[hashKey] = res;
       return res;
     })
-    .catch(error => console.log('error service', error));
+    .catch((error: Error) => console.log('error service', error));
 }

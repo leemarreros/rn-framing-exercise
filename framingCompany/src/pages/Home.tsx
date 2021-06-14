@@ -24,7 +24,7 @@ import FramesCarrousel from '../features/framesCarrousel';
 import Colors from '../utils/Colors';
 import ImagePlaceholder from '../utils/ImagePlaceholder';
 
-const height = Dimensions.get("window").height;
+const height = Dimensions.get('window').height;
 const logo = '../images/logo.png';
 const changeIcon = '../images/change.png';
 const profilePicSize = 220;
@@ -112,9 +112,10 @@ const App = () => {
                         includeBase64: true,
                       })
                         .then(image => {
+                          // @ts-ignore
                           updatePicture(image.data);
                         })
-                        .catch(error => console.log(error));
+                        .catch((error: Error) => console.log(error));
                     }}
                     activeOpacity={0.75}>
                     <Image
@@ -153,7 +154,7 @@ const styles = StyleSheet.create({
   },
   scrollViewStyle: {
     flexDirection: 'column',
-    ...Platform.OS === 'android' ? {height: height} : {flex: 1},
+    ...(Platform.OS === 'android' ? {height: height} : {flex: 1}),
   },
   header: {
     flex: 2,

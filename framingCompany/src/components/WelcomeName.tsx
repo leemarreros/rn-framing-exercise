@@ -1,10 +1,14 @@
 import React from 'react';
-import {Text, StyleSheet} from 'react-native';
+import {Text, StyleSheet, TextStyle} from 'react-native';
 
 import Colors from '../utils/Colors';
 
 interface Props {
     title: string;
+}
+
+interface Styles {
+  titleStyle: TextStyle;
 }
 
 const WelcomeName: React.FC<Props> = ({title}) => {
@@ -13,7 +17,7 @@ const WelcomeName: React.FC<Props> = ({title}) => {
   )
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Styles>({
   titleStyle: {
     fontFamily: 'Helvetica',
     fontWeight: 'bold',

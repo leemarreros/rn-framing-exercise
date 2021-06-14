@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Image, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { responseFrameI, ShapeEnum, ShapeType } from '../../types/types';
 
 import {getImageWithFrame} from '../services/frames';
 import Colors from '../utils/Colors';
@@ -22,16 +23,16 @@ const FramePreview: React.FC<Props> = ({
   const [picturePerFrame, setPicturePerFrame] = useState(pictureUpdated);
 
   useEffect(() => {
-    const shape = isRoundedProfile ? 'Round' : 'Square';
+    const shape:ShapeType = isRoundedProfile ? ShapeEnum.ROUND : ShapeEnum.SQUARE;
     if (frameNumber !== 0) {
       getImageWithFrame(pictureUpdated, shape, frameNumber)
-        .then(data => {
+        .then((data: responseFrameI) => {
           if (data !== undefined) {
             const {response} = data;
             setPicturePerFrame(response.replace('data:image/png;base64,', ''));
           }
         })
-        .catch(error => console.log('Error in Getting Frame', error));
+        .catch((error: Error) => console.log('Error in Getting Frame', error));
     }
     setPicturePerFrame(pictureUpdated);
     return () => {};
