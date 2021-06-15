@@ -39,6 +39,7 @@ const App = () => {
   const [editingMode, setEditingMode] = React.useState(false);
   const [userName, setUserName] = React.useState('');
   const [isRoundedProfile, setShapeProfile] = React.useState(true);
+  const [frameNumberActive, setFrameNumberActive] = React.useState(0);
 
   useEffect(() => {
     updateMainPicture(pictureUpdated);
@@ -136,6 +137,8 @@ const App = () => {
           </View>
           <View style={styles.carrousel}>
             <FramesCarrousel
+              setFrameNumberActive={setFrameNumberActive}
+              frameNumberActive={frameNumberActive}
               updateMainPicture={updateMainPicture}
               editingMode={editingMode}
               isRoundedProfile={isRoundedProfile}

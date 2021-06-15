@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Image, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import { responseFrameI, ShapeEnum, ShapeType } from '../../types/types';
+import {responseFrameI, ShapeEnum, ShapeType} from '../../types/types';
 
 import {getImageWithFrame} from '../services/frames';
 import Colors from '../utils/Colors';
@@ -19,29 +19,43 @@ const FramePreview: React.FC<Props> = ({
   frameNumber,
   frameName,
   updateMainPicture,
+  frameNumberActive,
+  editingMode,
+  setFrameNumberActive,
 }) => {
   const [picturePerFrame, setPicturePerFrame] = useState(pictureUpdated);
 
   useEffect(() => {
-    const shape:ShapeType = isRoundedProfile ? ShapeEnum.ROUND : ShapeEnum.SQUARE;
+    const shape: ShapeType = isRoundedProfile
+      ? ShapeEnum.ROUND
+      : ShapeEnum.SQUARE;
     if (frameNumber !== 0) {
       getImageWithFrame(pictureUpdated, shape, frameNumber)
         .then((data: responseFrameI) => {
           if (data !== undefined) {
             const {response} = data;
             setPicturePerFrame(response.replace('data:image/png;base64,', ''));
+            if (frameNumber === frameNumberActive) {
+              updateMainPicture(response.replace('data:image/png;base64,', ''));
+            }
           }
         })
-        .catch((error: Error) => {throw new Error('Error in Getting Frame')});
+        .catch((error: Error) => {
+          throw new Error('Error in Getting Frame');
+        });
     }
     setPicturePerFrame(pictureUpdated);
-    return () => {};
+
+
   }, [pictureUpdated, isRoundedProfile]);
 
   return (
     <TouchableOpacity
       testID="buttonFramePreview"
-      onPress={() => updateMainPicture(picturePerFrame)}
+      onPress={() => {
+        updateMainPicture(picturePerFrame)
+        setFrameNumberActive(frameNumber)
+      }}
       style={styles.frame}>
       <Text style={styles.frameName}>{frameName}</Text>
       <Image

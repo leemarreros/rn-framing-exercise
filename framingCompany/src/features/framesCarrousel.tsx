@@ -19,6 +19,8 @@ const FramesCarrousel: React.FC<PropsCarrousel> = ({
   isRoundedProfile,
   pictureUpdated,
   updateMainPicture,
+  frameNumberActive,
+  setFrameNumberActive,
 }) => {
   return editingMode ? (
     <ScrollView
@@ -30,6 +32,9 @@ const FramesCarrousel: React.FC<PropsCarrousel> = ({
       {arrayFrameNames.map((frameName: FrameNamesType, index: number) => {
         return (
           <FramePreview
+            setFrameNumberActive={setFrameNumberActive}
+            frameNumberActive={frameNumberActive}
+            editingMode={editingMode}
             frameName={frameName}
             key={index.toString()}
             isRoundedProfile={isRoundedProfile}
