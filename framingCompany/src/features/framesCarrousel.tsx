@@ -12,6 +12,8 @@ interface PropsCarrousel {
   isRoundedProfile: boolean;
   pictureUpdated: string;
   updateMainPicture: Function;
+  frameNumberActive: number;
+  setFrameNumberActive: Function;
 }
 
 const FramesCarrousel: React.FC<PropsCarrousel> = ({
@@ -32,9 +34,9 @@ const FramesCarrousel: React.FC<PropsCarrousel> = ({
       {arrayFrameNames.map((frameName: FrameNamesType, index: number) => {
         return (
           <FramePreview
+            editingMode={editingMode}
             setFrameNumberActive={setFrameNumberActive}
             frameNumberActive={frameNumberActive}
-            editingMode={editingMode}
             frameName={frameName}
             key={index.toString()}
             isRoundedProfile={isRoundedProfile}

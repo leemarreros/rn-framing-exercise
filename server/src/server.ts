@@ -50,7 +50,6 @@ app.post("/getImageWithFrame", async (req, res) => {
         .getBase64Async(jimp.MIME_PNG)
         .then(function (result: string) {
           let ans: responseFrameI = { response: result }
-          fs.writeFileSync('./res', result)
           res.send(ans);
         })
         .catch(function (error: Error) {

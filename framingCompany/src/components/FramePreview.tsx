@@ -9,8 +9,10 @@ interface Props {
   pictureUpdated: string;
   isRoundedProfile: boolean;
   frameNumber: number;
+  frameNumberActive: number;
   frameName: string;
   updateMainPicture: Function;
+  setFrameNumberActive: Function;
 }
 
 const FramePreview: React.FC<Props> = ({
@@ -20,12 +22,13 @@ const FramePreview: React.FC<Props> = ({
   frameName,
   updateMainPicture,
   frameNumberActive,
-  editingMode,
   setFrameNumberActive,
+  editingMode,
 }) => {
   const [picturePerFrame, setPicturePerFrame] = useState(pictureUpdated);
 
   useEffect(() => {
+    console.log('editingMode', editingMode)
     const shape: ShapeType = isRoundedProfile
       ? ShapeEnum.ROUND
       : ShapeEnum.SQUARE;
@@ -47,7 +50,7 @@ const FramePreview: React.FC<Props> = ({
     setPicturePerFrame(pictureUpdated);
 
 
-  }, [pictureUpdated, isRoundedProfile]);
+  }, [pictureUpdated, isRoundedProfile, editingMode]);
 
   return (
     <TouchableOpacity
