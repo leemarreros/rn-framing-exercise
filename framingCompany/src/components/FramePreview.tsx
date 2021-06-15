@@ -40,10 +40,12 @@ const FramePreview: React.FC<Props> = ({
 
   return (
     <TouchableOpacity
+      testID="buttonFramePreview"
       onPress={() => updateMainPicture(picturePerFrame)}
       style={styles.frame}>
       <Text style={styles.frameName}>{frameName}</Text>
       <Image
+        testID="imageCarrousel"
         source={{uri: `data:image/jpeg;base64,${picturePerFrame}`}}
         style={[styles.pic, isRoundedProfile ? styles.rounded : null]}
       />

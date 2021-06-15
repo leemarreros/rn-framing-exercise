@@ -3,7 +3,7 @@
  * @format
  */
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -30,15 +30,15 @@ const changeIcon = '../images/change.png';
 const profilePicSize = 220;
 
 const App = () => {
-  const [pictureUpdated, updatePicture] = useState(
+  const [pictureUpdated, updatePicture] = React.useState(
     ImagePlaceholder.profilePic64,
   );
-  const [mainPicture, updateMainPicture] = useState(
+  const [mainPicture, updateMainPicture] = React.useState(
     ImagePlaceholder.profilePic64,
   );
-  const [editingMode, setEditingMode] = useState(false);
-  const [userName, setUserName] = useState('');
-  const [isRoundedProfile, setShapeProfile] = useState(true);
+  const [editingMode, setEditingMode] = React.useState(false);
+  const [userName, setUserName] = React.useState('');
+  const [isRoundedProfile, setShapeProfile] = React.useState(true);
 
   useEffect(() => {
     updateMainPicture(pictureUpdated);
@@ -120,7 +120,9 @@ const App = () => {
                           // @ts-ignore
                           updatePicture(image.data);
                         })
-                        .catch((error: Error) => console.log(error));
+                        .catch((error: Error) => {
+                          throw new Error('Image Picker didn\'t respond.');
+                        });
                     }}
                     activeOpacity={0.75}>
                     <Image
