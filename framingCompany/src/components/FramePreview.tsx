@@ -13,6 +13,7 @@ interface Props {
   frameName: string;
   updateMainPicture: Function;
   setFrameNumberActive: Function;
+  editingMode: boolean;
 }
 
 const FramePreview: React.FC<Props> = ({
@@ -28,7 +29,6 @@ const FramePreview: React.FC<Props> = ({
   const [picturePerFrame, setPicturePerFrame] = useState(pictureUpdated);
 
   useEffect(() => {
-    console.log('editingMode', editingMode)
     const shape: ShapeType = isRoundedProfile
       ? ShapeEnum.ROUND
       : ShapeEnum.SQUARE;
