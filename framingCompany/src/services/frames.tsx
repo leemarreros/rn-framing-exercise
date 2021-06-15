@@ -1,7 +1,7 @@
 import { responseFrameI } from '../../types/types';
 import Hashing from '../utils/Hash';
 
-const rootUrl = 'http://localhost:5000';
+const rootUrl = 'http://192.168.100.2:5000';
 const cache: {string: responseFrameI} | any = {};
 
 export function getImageWithFrame(imageBase64: string, type: string, frameNumber: number): Promise<responseFrameI> {

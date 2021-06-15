@@ -50,11 +50,11 @@ app.post("/getImageWithFrame", function (req, res) {
             .then(function (result) {
             res.send({ response: result });
         })
-            .catch(function (error) {
+            .catch(function (error: Error) {
             console.log("Error converting to base64", error);
         });
     })
-        .catch(function (error) {
+        .catch(function (error: Error) {
         console.log("Error reading paths", error);
     });
 });
