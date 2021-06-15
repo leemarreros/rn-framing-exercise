@@ -8,7 +8,6 @@ import App from '../src/pages/Home';
 import {render, fireEvent} from '@testing-library/react-native';
 import {toHaveStyle, toHaveProp} from '@testing-library/jest-native';
 
-import {getImageWithFrame} from '../src/services/frames';
 import {act} from 'react-test-renderer';
 
 expect.extend({toHaveStyle, toHaveProp});

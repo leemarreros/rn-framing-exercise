@@ -1,7 +1,7 @@
 import {responseFrameI, ShapeType} from '../../types/types';
 import Hashing from '../utils/Hash';
 
-const rootUrl = 'http://192.168.100.2:5000';
+const rootUrl = 'http://localhost:5000';
 const cache: {string: responseFrameI} | any = {};
 
 export function getImageWithFrame(
@@ -15,7 +15,6 @@ export function getImageWithFrame(
   if (cache[hashKey]) {
     return cache[hashKey];
   }
-
   const getFrameUrl = `${rootUrl}/${request}`;
   return fetch(getFrameUrl, {
     method: 'POST',
