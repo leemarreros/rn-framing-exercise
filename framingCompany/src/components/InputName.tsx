@@ -21,6 +21,7 @@ const InputName: React.FC<Props> = ({userName, editingMode, setUserName}) => {
   return (
     <View style={styles.inputWrapper}>
       <TextInput
+        testID="inputTextName"
         placeholderTextColor={Colors.seafoamBlue}
         style={styles.input}
         onChangeText={onChangeText}

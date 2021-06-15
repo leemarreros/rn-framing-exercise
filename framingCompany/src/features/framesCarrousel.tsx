@@ -22,6 +22,7 @@ const FramesCarrousel: React.FC<PropsCarrousel> = ({
 }) => {
   return editingMode ? (
     <ScrollView
+      testID="carrouseOflFrames"
       horizontal
       showsHorizontalScrollIndicator={false}
       style={styles.scroll}

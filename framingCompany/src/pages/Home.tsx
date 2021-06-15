@@ -51,6 +51,7 @@ const App = () => {
         <View style={styles.header}>
           <View style={styles.logoContainer}>
             <Image
+              testID="logoImage"
               source={require(logo)}
               style={styles.logo}
               resizeMode="contain"
@@ -76,12 +77,14 @@ const App = () => {
               <View style={styles.squareRoundButtons}>
                 {editingMode && (
                   <TouchableOpacity
+                    testID="buttonShapeSquare"
                     onPress={() => setShapeProfile(false)}
                     style={[styles.buttonLeft, styles.squareButton]}
                   />
                 )}
                 {editingMode && (
                   <TouchableOpacity
+                    testID="buttonShapeRound"
                     onPress={() => setShapeProfile(true)}
                     style={[styles.buttonLeft, styles.roundedButton]}
                   />
@@ -93,6 +96,7 @@ const App = () => {
                   isRoundedProfile ? styles.userPictureWrapRounded : null,
                 ]}>
                 <Image
+                  testID="mainPicture"
                   source={{uri: `data:image/jpeg;base64,${mainPicture}`}}
                   style={[
                     styles.userPicture,
@@ -104,6 +108,7 @@ const App = () => {
               <View style={styles.changePictureButton}>
                 {editingMode && (
                   <TouchableOpacity
+                    testID="buttonChangePicture"
                     onPress={() => {
                       ImagePicker.openPicker({
                         width: 300,

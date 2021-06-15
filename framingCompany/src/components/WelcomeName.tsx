@@ -4,7 +4,7 @@ import {Text, StyleSheet, TextStyle} from 'react-native';
 import Colors from '../utils/Colors';
 
 interface Props {
-    title: string;
+  title: string;
 }
 
 interface Styles {
@@ -13,9 +13,11 @@ interface Styles {
 
 const WelcomeName: React.FC<Props> = ({title}) => {
   return (
-    <Text style={styles.titleStyle}>{title}</Text>
-  )
-}
+    <Text testID="welcomeTitle" style={styles.titleStyle}>
+      {title}
+    </Text>
+  );
+};
 
 const styles = StyleSheet.create<Styles>({
   titleStyle: {
@@ -24,7 +26,7 @@ const styles = StyleSheet.create<Styles>({
     fontSize: 31,
     color: Colors.seafoamBlue,
     textAlign: 'center',
-  }
+  },
 });
 
 export default WelcomeName;

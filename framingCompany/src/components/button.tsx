@@ -11,6 +11,7 @@ interface Props {
 const Button: React.FC<Props> = ({onPress, title}) => {
   return (
     <TouchableOpacity
+        testID="buttonEditingMode"
         activeOpacity={0.75}
         onPress={onPress} 
         style={styles.appButtonContainer}

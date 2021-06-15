@@ -32,7 +32,7 @@ const FramePreview: React.FC<Props> = ({
             setPicturePerFrame(response.replace('data:image/png;base64,', ''));
           }
         })
-        .catch((error: Error) => console.log('Error in Getting Frame', error));
+        .catch((error: Error) => {throw new Error('Error in Getting Frame')});
     }
     setPicturePerFrame(pictureUpdated);
     return () => {};
